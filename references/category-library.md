@@ -1,50 +1,51 @@
 # Negative Category Library
 
-The full category tables and industry packs for `negative-library-starter`. This is the *generation* lens (build a library from the business). For the *negation* lens (score an existing search terms report), see `search-term-scorer/references/negative-keyword-starter-library.md`.
+Category prompts and industry notes for `negative-library-starter`. Every entry here is a question to answer against the actual offer, not a term to paste. For reviewing real search terms once data exists, see [search-term-scorer](https://github.com/treboutat/google-ads-search-term-scorer).
 
-## Universal categories (almost every account)
+## Category prompts
 
-| Category | Purpose | Example terms | Default match |
-|---|---|---|---|
-| Job / Career | Block job seekers | job, jobs, career, salary, hiring, intern, glassdoor, indeed, "job description" | Phrase |
-| Education / Info | Block students/researchers | tutorial, course, "what is", definition, meaning, wiki, pdf, ebook, examples | Phrase |
-| Support / Troubleshoot | Block help-seekers | "not working", error, bug, fix, troubleshoot, complaint, "customer service" | Phrase |
-| Personal / Consumer | Block non-B2B intent | prank, anonymous, spy, "parental control", personal, free | Phrase |
-| Negative intent / Spam | Block bad-faith searches | scam, spam, fraud, hack, phishing, unsubscribe, block | Phrase |
-| Free / Piracy | Block piracy + extreme bargain hunters | free, "open source", cracked, pirated, torrent, "coupon code", nulled | Phrase |
-| Regulatory / Compliance | Block regulation researchers | gdpr, "ftc complaint", tcpa, regulations (tune by industry) | Phrase |
+| Category | Words that often appear | Check before excluding |
+|---|---|---|
+| Employment | jobs, careers, salary, hiring, intern, glassdoor, indeed, "job description" | Does the campaign serve anyone looking for work or salary data? Hiring, recruiting, HR and payroll-compliance products may need these words. |
+| Education or DIY | tutorial, course, "what is", definition, examples, template, pdf, "how to" | Is this learning intent outside the goal, or part of how buyers research? Templates and how-to searches often precede a purchase. |
+| Support or troubleshooting | login, support, "not working", error, fix, "customer service" | Is the searcher an existing user of someone else's product, or a buyer? Support software, repair and replacement businesses sell through problem searches. Brand campaigns may need login and support traffic handled deliberately. |
+| Free, discounts, piracy | free, cheap, coupon, "promo code", crack, torrent, nulled, "open source" | Does the business offer a trial, free plan, consultation, coupon or free shipping? Separate an unwanted free substitute or pirated product from a real offer. |
+| Wrong product or audience | industry-specific | What does the business actually not sell, and which use cases can't it serve? Confirm the limitation instead of assuming it. |
+| Fraud, privacy, compliance | fraud, spam, scam, hack, gdpr, tcpa, hipaa, regulations | Could this be the product category? Fraud-prevention, security and compliance products sell on these words. Never infer that a concerning word means a bad customer. |
+| Other platforms | competing or adjacent platform names | Does the business integrate with, migrate from, or compete against it? Record the competitor strategy first. |
 
-## Industry packs
+## Industry notes
 
 ### B2B SaaS
-Block: "free", "open source", "self hosted", "for students", "for nonprofits" (if out of ICP), "api documentation", "alternative to" (route to a competitor campaign, don't just negate). Keep: "pricing", "reviews", "vs" (comparison intent usually converts).
+Check before excluding "free" (trials, freemium), "open source" and "self hosted" (may be a real alternative you compete with), "for students" and "for nonprofits" (confirm they're out of ICP), "api documentation" (can be a technical buyer), "alternative to" and "vs" (competitor strategy decides). "Pricing" and "reviews" are usually buyer intent.
 
-### Healthcare / regulated
-Block: "home remedy", "natural cure", "free clinic", "jobs"/"travel nurse" (heavy job-seeking), symptom-only research with no service intent. **Caution:** never block terms that would stop legitimate care-seekers from a service you actually offer. Compliance review before shipping.
+### Healthcare and regulated services
+Verify the actual service, eligibility and payer rules before excluding condition, symptom, cost, insurance or place terms. A research-looking search can come from someone seeking care. Employment terms ("travel nurse", "jobs") are common here; check that none of them describe a service you offer. Get a compliance review before shipping.
 
 ### Legal
-Block: "diy", "do it yourself", "free legal", "law school", "salary", "jobs", "templates". Keep: "near me", "cost", "consultation".
+Check "free legal", "consultation", "cost" and "near me" against the actual intake model; free consultations make "free" a buyer word. "Law school", "salary" and "jobs" are usually employment or education intent.
 
 ### E-commerce
-Block: "used", "refurbished" (if you sell new), "replica", "knock off", "wholesale" (if D2C), piracy/coupon terms. Keep: "reviews", "free shipping" hunters (usually convert), competitor SKUs only in non-competitor campaigns.
+Check "used", "refurbished", "wholesale" and "replica" against what you actually sell. "Reviews", "free shipping", coupons and competitor product names can all be buyer intent; decide competitor routing deliberately.
 
 ### Local services
-Block: "diy", "rental", "used", "parts", neighboring cities/states you don't serve, "salary"/"jobs". Keep: "near me", "cost", "how much" (price intent converts).
+Check "diy", "rental", "parts" and "repair" against the services offered. Exclude locations you don't serve through location settings or specific negatives, and confirm service areas first. "Cost", "how much" and "near me" are usually buyer intent.
 
-### Communications / messaging software (example)
-Block: "phone plan", "carrier", "sim card", "phone repair" (hardware), "ringtone", "emoji", "sticker" (wrong product), "whatsapp api", "telegram bot", "discord bot" (unrelated platforms), "prank text", "anonymous text", "spy" (consumer). **Trap:** never negate the platform word itself (`sms`, `text`) — it's in your target keywords.
+### Messaging software (example)
+Candidates such as "phone plan", "sim card", "ringtone", "prank text" and "anonymous text" usually describe consumer products. Check "whatsapp api", "telegram bot" and "discord bot" against whether the platform supports those channels. Keep compliance words like "tcpa compliant" eligible; for an SMS platform they're a buying criterion. Never negate the platform word itself (`sms`, `text`).
 
 ## Match-type guidance
 
-- **Phrase** — default for category-level blocks ("free template", "jobs"). Catches variants.
-- **Exact** — brand-protection ([yourbrand] as a negative in non-brand) and surgical single-query blocks.
-- **Broad** — rare; only to block any query containing all those words in any order.
+- **Exact** for an isolated unwanted query.
+- **Phrase** when the whole phrase represents unwanted intent across the affected campaigns.
+- **Broad** when the combination is unwanted in any word order.
+- Negatives don't match synonyms or singular/plural forms, so check each form you mean to cover.
+- A one-word phrase negative blocks as much as the same one-word broad negative.
+- Brand: an exact `[brandname]` negative blocks only the bare brand query. Broader brand separation needs brand lists or a scoped negative set.
 
-## The over-blocking trap (read before shipping)
+## The over-blocking traps (read before shipping)
 
-The most common starter-library mistake is a negative that swallows a target keyword. Always test each proposed negative against the target themes:
-- Phrase negative `"sms"` blocks target `"sms marketing software"` → **don't add it**; use specific phrases.
-- Phrase negative `"text"` blocks target `"text message marketing"` → same.
-- Phrase negative `"free"` blocks target `"free trial crm"` if you run a freemium funnel → judge per business.
-
-When a category term overlaps a target theme, narrow to the specific irrelevant phrase rather than the broad token.
+1. **A negative swallows a target keyword.** Phrase `"sms"` blocks "sms marketing software"; phrase `"text"` blocks "text message marketing". Narrow to the specific irrelevant phrase ("prank text", "free sms app").
+2. **A negative blocks the offer.** Phrase `"free"` blocks "free trial sms marketing software" when the business advertises a trial.
+3. **A negative blocks a buyer search that isn't in the keyword plan.** A fraud-prevention product whose keywords say "payment risk platform" passes a keyword-overlap check against a generic `fraud` negative, but `fraud detection software` is valuable demand. Test against the protected-query list, not just the keywords.
+4. **Two reasonable lists combine into a bad one.** Check the combined effect of account, shared-list, campaign and ad-group negatives together.
